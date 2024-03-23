@@ -48,11 +48,11 @@ def custom_multi_label_loss(output, target, wgt):
 def train(args, model, optimizer, scheduler=None, model_name='model'):
     wandb.init(project="kit cv", name=model_name, config=vars(args))
     train_loader = utils.get_data_loader(
-        'voc', train=True, batch_size=args.batch_size, split='trainval', inp_size=args.inp_size)
+        args, 'voc', train=True, batch_size=args.batch_size, split='trainval', inp_size=args.inp_size)
     # test_loader = utils.get_data_loader(
     #     'voc', train=False, batch_size=args.test_batch_size, split='test', inp_size=args.inp_size)
     test_loader = utils.get_data_loader(
-        'voc', train=False, batch_size=len(test_dataset), split='test', inp_size=args.inp_size)
+        args, 'voc', train=False, batch_size=len(test_dataset), split='test', inp_size=args.inp_size)
 
     # Ensure model is in correct mode and on right device
     model.train()
