@@ -40,6 +40,8 @@ def compute_ap(gt, pred, valid, average=None):
     """
     nclasses = gt.shape[1]
     AP = []
+    true_labels = []
+    pred_labels = []
     for cid in range(nclasses):
         gt_cls = gt[:, cid][valid[:, cid] > 0].astype('float32')
         pred_cls = pred[:, cid][valid[:, cid] > 0].astype('float32')
@@ -67,6 +69,8 @@ def eval_dataset_map(model, device, test_loader):
     
     with torch.no_grad():
         AP_list = []
+        true_labels = []
+        pred_probs = []
 
         for data, target, wgt in test_loader:
             data = data.to(device)
@@ -75,10 +79,15 @@ def eval_dataset_map(model, device, test_loader):
             pred = F.softmax(output, dim=-1).cpu().numpy()
             gt = target.cpu().numpy()
             valid = wgt.cpu().numpy()
+
+            print(gt.shape, pred.shape, valid.shape)
+            true_labels.extend(gt)
+            pred_labels.extend(pred)
             
             AP = compute_ap(gt, pred, valid)
             AP_list.extend(AP)
-    
+        
+    confusion_matrix_result = confusion_matrix(true_labels, pred_labels)
     AP = np.array(AP_list)
     mAP = np.mean(AP)
 

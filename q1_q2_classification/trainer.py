@@ -2,10 +2,9 @@ from __future__ import print_function
 
 import torch
 import numpy as np
-from torch.utils.tensorboard import SummaryWriter
 import utils
 from voc_dataset import VOCDataset
-
+import wandb
 
 def save_this_epoch(args, epoch):
     if args.save_freq > 0 and (epoch+1) % args.save_freq == 0:
@@ -47,11 +46,13 @@ def custom_multi_label_loss(output, target, wgt):
     return loss
 
 def train(args, model, optimizer, scheduler=None, model_name='model'):
-    writer = SummaryWriter()
+    wandb.init(project="kit cv", name=model_name, config=vars(args))
     train_loader = utils.get_data_loader(
         'voc', train=True, batch_size=args.batch_size, split='trainval', inp_size=args.inp_size)
+    # test_loader = utils.get_data_loader(
+    #     'voc', train=False, batch_size=args.test_batch_size, split='test', inp_size=args.inp_size)
     test_loader = utils.get_data_loader(
-        'voc', train=False, batch_size=args.test_batch_size, split='test', inp_size=args.inp_size)
+        'voc', train=False, batch_size=len(test_dataset), split='test', inp_size=args.inp_size)
 
     # Ensure model is in correct mode and on right device
     model.train()
@@ -79,34 +80,29 @@ def train(args, model, optimizer, scheduler=None, model_name='model'):
             ##################################################################
             loss = custom_multi_label_loss(output, target, wgt)
             
-            # Log the loss to TensorBoard
-            writer.add_scalar("Loss/train", loss.item(), cnt)
+            # Log the loss to wandb
+            wandb.log({"loss": loss.item(), "epoch": epoch, "cnt": cnt})
             ##################################################################
             #                          END OF YOUR CODE                      #
             ##################################################################
             
             loss.backward()
             
-            if cnt % args.log_every == 0:
-                writer.add_scalar("Loss/train", loss.item(), cnt)
-                print('Train Epoch: {} [{} ({:.0f}%)]\tLoss: {:.6f}'.format(epoch, cnt, 100. * batch_idx / len(train_loader), loss.item()))
-                
-                # Log gradients
-                for tag, value in model.named_parameters():
-                    if value.grad is not None:
-                        writer.add_histogram(tag + "/grad", value.grad.cpu().numpy(), cnt)
+            # print progress bar
+            print('Train Epoch: {} [{} ({:.0f}%)]\tLoss: {:.6f}'.format(epoch, cnt, 100. * batch_idx / len(train_loader), loss.item()))
 
             optimizer.step()
-            
-            # Validation iteration
-            if cnt % args.val_every == 0:
-                model.eval()
-                ap, map = utils.eval_dataset_map(model, args.device, test_loader)
-                print("map: ", map)
-                writer.add_scalar("map", map, cnt)
-                model.train()
-            
             cnt += 1
+                    # Validation iteration
+        if epoch % args.val_every == 0:
+            all_predictions = []
+            all_targets = []
+            model.eval()
+            ap, map = utils.eval_dataset_map(model, args.device, test_loader)
+            print("map: ", map)
+            wandb.log({"map": map, "ap": ap, "epoch": epoch, "cnt": cnt})
+            writer.add_scalar("map", map, cnt)
+            model.train()
 
         if scheduler is not None:
             scheduler.step()
