@@ -56,7 +56,7 @@ import torch.nn as nn
 import torchvision
 
 class ResNet(nn.Module):
-    def __init__(self, num_classes, args):
+    def __init__(self, num_classes):
         super().__init__()
 
         # Initialize ResNet without specifying weights and load pre-trained weights
@@ -163,7 +163,7 @@ if __name__ == "__main__":
 
     # model = ResNet(len(VOCDataset.classes)).to(args.device)
     num_classes = count_classes(args.data_dir)
-    model = ResNet(num_classes, args).to(args.device)
+    model = ResNet(num_classes).to(args.device)
 
     ##################################################################
     #                          END OF YOUR CODE                      #
