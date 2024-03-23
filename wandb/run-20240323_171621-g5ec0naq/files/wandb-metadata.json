@@ -1,0 +1,67 @@
+{
+    "os": "Linux-6.1.58+-x86_64-with-glibc2.35",
+    "python": "3.10.12",
+    "heartbeatAt": "2024-03-23T17:16:22.176116",
+    "startedAt": "2024-03-23T17:16:21.174341",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "--run_name",
+        "run-new_and_clean_data_canny-2_canny_masks",
+        "--canny_low",
+        "10",
+        "--canny_high",
+        "20",
+        "--epochs",
+        "75",
+        "--data_dir",
+        "../data/newData/",
+        "--batch_size",
+        "32",
+        "--lr",
+        "0.0005"
+    ],
+    "state": "running",
+    "program": "/content/drive/.shortcut-targets-by-id/12qdxIhrJkYThSDH6ulLJ4IaUDG4pGrFG/RA_Daragh_CV_Arduino/cv-component/q1_q2_classification/train_q2.py",
+    "codePathLocal": "q1_q2_classification/train_q2.py",
+    "codePath": "q1_q2_classification/train_q2.py",
+    "host": "790dd8398875",
+    "username": "root",
+    "executable": "/usr/bin/python3",
+    "cpu_count": 1,
+    "cpu_count_logical": 2,
+    "cpu_freq": {
+        "current": 2299.998,
+        "min": 0.0,
+        "max": 0.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 2299.998,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2299.998,
+            "min": 0.0,
+            "max": 0.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 201.22513961791992,
+            "used": 26.11812973022461
+        }
+    },
+    "gpu": "Tesla T4",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "Tesla T4",
+            "memory_total": 16106127360
+        }
+    ],
+    "memory": {
+        "total": 12.674789428710938
+    }
+}

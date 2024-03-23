@@ -10,43 +10,78 @@ import random
 import cv2
 import argparse
 
+# class ResNet(nn.Module):
+#     def __init__(self, num_classes, args) -> None:
+#         super().__init__()
+
+#         self.resnet = torchvision.models.resnet18(pretrained=True)
+#         ##################################################################
+#         # TODO: Define a FC layer here to process the features
+#         ##################################################################
+#         self.resnet = nn.Sequential(*list(self.resnet.children())[:-1])
+
+#         for param in self.resnet.parameters():
+#             param.requires_grad = False
+
+        
+#         # Define your own classification layer for the specific task
+#         self.fc = nn.Linear(512, num_classes) 
+#         self.fc.requires_grad = True
+
+#         self.softmax = nn.Softmax(dim=1)
+
+#         ##################################################################
+#         #                          END OF YOUR CODE                      #
+#         ##################################################################
+        
+
+#     def forward(self, x):
+#         ##################################################################
+#         # TODO: Return unnormalized log-probabilities here
+#         ##################################################################
+#         # Flatten the output (if needed) before passing it to the classification layer
+#         x = self.resnet(x)
+#         x = x.view(x.size(0), -1)
+
+#         # Pass the features through your classification layer
+#         out = self.fc(x)
+#         return self.softmax(out)
+#         ##################################################################
+#         #                          END OF YOUR CODE                      #
+#         ##################################################################
+
+
+import torch
+import torch.nn as nn
+import torchvision
+
 class ResNet(nn.Module):
-    def __init__(self, num_classes) -> None:
+    def __init__(self, num_classes, args):
         super().__init__()
 
-        self.resnet = torchvision.models.resnet18(weights='IMAGENET1K_V1')
-        ##################################################################
-        # TODO: Define a FC layer here to process the features
-        ##################################################################
+        # Initialize ResNet without specifying weights and load pre-trained weights
+        self.resnet = torchvision.models.resnet18(pretrained=True)
+        
+        # Remove the last fully connected layer
         self.resnet = nn.Sequential(*list(self.resnet.children())[:-1])
 
+        # Freeze pre-trained parameters
         for param in self.resnet.parameters():
             param.requires_grad = False
 
-        
         # Define your own classification layer for the specific task
-        self.fc = nn.Linear(512, num_classes) 
-        self.fc.requires_grad = True
-
-        ##################################################################
-        #                          END OF YOUR CODE                      #
-        ##################################################################
-        
+        self.fc = nn.Linear(512, num_classes)
 
     def forward(self, x):
-        ##################################################################
-        # TODO: Return unnormalized log-probabilities here
-        ##################################################################
-        # Flatten the output (if needed) before passing it to the classification layer
+        # Forward pass through ResNet
         x = self.resnet(x)
+        
+        # Flatten the output
         x = x.view(x.size(0), -1)
 
-        # Pass the features through your classification layer
+        # Pass through the classification layer
         out = self.fc(x)
         return out
-        ##################################################################
-        #                          END OF YOUR CODE                      #
-        ##################################################################
 
 
 class ResNetWithEdge(nn.Module):
@@ -66,6 +101,8 @@ class ResNetWithEdge(nn.Module):
 
         self.canny_low = args.canny_low
         self.canny_high = args.canny_high
+
+        self.softmax = nn.Softmax(dim=1)
 
     def forward(self, x):
         # Canny edge detection
@@ -107,7 +144,7 @@ class ResNetWithEdge(nn.Module):
 
         # Classification
         # out = self.softmax(self.fc2(features_combined))
-        out = self.fc2(features_combined)
+        out = self.softmax(self.fc2(features_combined))
         return out
 
 if __name__ == "__main__":
@@ -126,7 +163,7 @@ if __name__ == "__main__":
 
     # model = ResNet(len(VOCDataset.classes)).to(args.device)
     num_classes = count_classes(args.data_dir)
-    model = ResNetWithEdge(num_classes, args).to(args.device)
+    model = ResNet(num_classes, args).to(args.device)
 
     ##################################################################
     #                          END OF YOUR CODE                      #

@@ -1,6 +1,8 @@
 from __future__ import print_function
+from sklearn.metrics.cluster import entropy
 
 import torch
+import torch.nn as nn
 import numpy as np
 import utils
 from voc_dataset import VOCDataset
@@ -46,13 +48,13 @@ def custom_multi_label_loss(output, target, wgt):
     return loss
 
 def train(args, model, optimizer, scheduler=None, model_name='model'):
-    wandb.init(project="kit cv", name=model_name, config=vars(args))
+    wandb.init(project="kit cv", name=args.run_name, config=vars(args))
     train_loader = utils.get_data_loader(
         args, 'voc', train=True, batch_size=args.batch_size, split='trainval', inp_size=args.inp_size)
     # test_loader = utils.get_data_loader(
     #     'voc', train=False, batch_size=args.test_batch_size, split='test', inp_size=args.inp_size)
     test_loader = utils.get_data_loader(
-        args, 'voc', train=False, batch_size=len(test_dataset), split='test', inp_size=args.inp_size)
+        args, 'voc', train=False, batch_size=args.test_batch_size, split='test', inp_size=args.inp_size)
 
     # Ensure model is in correct mode and on right device
     model.train()
@@ -78,10 +80,20 @@ def train(args, model, optimizer, scheduler=None, model_name='model'):
             # Function Outputs:
             #   - `output`: Computed loss, a single floating point number
             ##################################################################
-            loss = custom_multi_label_loss(output, target, wgt)
+            # Example of target with class indices
+            criterion = nn.CrossEntropyLoss()
+
+            # print("predicted", output)
+            # print("target", target)
+            predictions = torch.argmax(output, 1) 
+            target_label = torch.argmax(target, 1)
             
-            # Log the loss to wandb
-            wandb.log({"loss": loss.item(), "epoch": epoch, "cnt": cnt})
+            # loss = entropy(output, target_label)
+            loss = criterion(output, target_label)
+            accuracy = (predictions == target_label).sum().item() / len(target_label)
+
+            lr = optimizer.param_groups[0]['lr']  # Assuming there's only one parameter group
+            wandb.log({"Loss/train": loss, "learning_rate": lr, "cnt": cnt, "arruracy": accuracy})
             ##################################################################
             #                          END OF YOUR CODE                      #
             ##################################################################
@@ -89,11 +101,13 @@ def train(args, model, optimizer, scheduler=None, model_name='model'):
             loss.backward()
             
             # print progress bar
-            print('Train Epoch: {} [{} ({:.0f}%)]\tLoss: {:.6f}'.format(epoch, cnt, 100. * batch_idx / len(train_loader), loss.item()))
+            # if cnt % args.batch_size == 0:
+            print('Train Epoch: {} [{} ({:.0f}%)]\tLoss: {:.6f}\tAccuracy: {:.6f}'.format(epoch, cnt, 100. * batch_idx / len(train_loader), loss.item(), accuracy))
 
             optimizer.step()
             cnt += 1
-                    # Validation iteration
+        
+        # Validation iteration
         if epoch % args.val_every == 0:
             all_predictions = []
             all_targets = []
@@ -101,12 +115,10 @@ def train(args, model, optimizer, scheduler=None, model_name='model'):
             ap, map = utils.eval_dataset_map(model, args.device, test_loader)
             print("map: ", map)
             wandb.log({"map": map, "ap": ap, "epoch": epoch, "cnt": cnt})
-            writer.add_scalar("map", map, cnt)
             model.train()
 
         if scheduler is not None:
             scheduler.step()
-            writer.add_scalar("learning_rate", scheduler.get_last_lr()[0], cnt)
 
         # save model
         if save_this_epoch(args, epoch):
@@ -115,4 +127,5 @@ def train(args, model, optimizer, scheduler=None, model_name='model'):
     # Validation iteration
     test_loader = utils.get_data_loader('voc', train=False, batch_size=args.test_batch_size, split='test', inp_size=args.inp_size)
     ap, map = utils.eval_dataset_map(model, args.device, test_loader)
+    wandb.finish()
     return ap, map

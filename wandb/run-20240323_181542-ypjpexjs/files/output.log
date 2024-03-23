@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/content/drive/.shortcut-targets-by-id/12qdxIhrJkYThSDH6ulLJ4IaUDG4pGrFG/RA_Daragh_CV_Arduino/cv-component/q1_q2_classification/train_q2.py", line 144, in <module>
+    test_ap, test_map = trainer.train(args, model, optimizer, scheduler)
+  File "/content/drive/.shortcut-targets-by-id/12qdxIhrJkYThSDH6ulLJ4IaUDG4pGrFG/RA_Daragh_CV_Arduino/cv-component/q1_q2_classification/trainer.py", line 86, in train
+    output = loss(predictions, target_label)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/loss.py", line 1179, in forward
+    return F.cross_entropy(input, target, weight=self.weight,
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/functional.py", line 3059, in cross_entropy
+    return torch._C._nn.cross_entropy_loss(input, target, weight, _Reduction.get_enum(reduction), ignore_index, label_smoothing)

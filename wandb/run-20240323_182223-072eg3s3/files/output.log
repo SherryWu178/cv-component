@@ -1,0 +1,275 @@
+tensor([[0.3383, 0.3868, 0.2748],
+        [0.2938, 0.4334, 0.2729],
+        [0.2955, 0.4061, 0.2984],
+        [0.3131, 0.3873, 0.2996],
+        [0.3069, 0.4144, 0.2787],
+        [0.3028, 0.4146, 0.2826],
+        [0.2892, 0.4090, 0.3018],
+        [0.3406, 0.3895, 0.2699]], device='cuda:0', grad_fn=<SoftmaxBackward0>)
+tensor([0, 1, 2, 0, 0, 2, 0, 0], device='cuda:0')
+tensor([0, 1, 2, 0, 0, 2, 0, 0], device='cuda:0')
+tensor([1, 1, 1, 1, 1, 1, 1, 1], device='cuda:0')
+1
+Train Epoch: 0 [0 (0%)]	Loss: 1.108097Accuracy: 0.125000
+tensor([[0.8634, 0.0614, 0.0752],
+        [0.8584, 0.0635, 0.0781],
+        [0.8943, 0.0464, 0.0593],
+        [0.8450, 0.0699, 0.0851],
+        [0.8776, 0.0551, 0.0674],
+        [0.8744, 0.0567, 0.0689],
+        [0.8748, 0.0586, 0.0666],
+        [0.8564, 0.0632, 0.0805]], device='cuda:0', grad_fn=<SoftmaxBackward0>)
+tensor([0, 2, 1, 2, 1, 0, 1, 2], device='cuda:0')
+tensor([0, 2, 1, 2, 1, 0, 1, 2], device='cuda:0')
+tensor([0, 0, 0, 0, 0, 0, 0, 0], device='cuda:0')
+2
+tensor([[0.8389, 0.0411, 0.1200],
+        [0.8858, 0.0294, 0.0848],
+        [0.8484, 0.0403, 0.1114],
+        [0.8435, 0.0408, 0.1157],
+        [0.8476, 0.0374, 0.1150],
+        [0.8664, 0.0375, 0.0961],
+        [0.8366, 0.0441, 0.1193],
+        [0.8406, 0.0455, 0.1139]], device='cuda:0', grad_fn=<SoftmaxBackward0>)
+tensor([0, 0, 0, 2, 1, 0, 1, 1], device='cuda:0')
+tensor([0, 0, 0, 2, 1, 0, 1, 1], device='cuda:0')
+tensor([0, 0, 0, 0, 0, 0, 0, 0], device='cuda:0')
+4
+tensor([[0.8616, 0.0318, 0.1066],
+        [0.8973, 0.0252, 0.0775],
+        [0.8263, 0.0406, 0.1331],
+        [0.8554, 0.0341, 0.1105],
+        [0.8451, 0.0361, 0.1188],
+        [0.8361, 0.0389, 0.1250],
+        [0.8248, 0.0381, 0.1371],
+        [0.8295, 0.0393, 0.1312]], device='cuda:0', grad_fn=<SoftmaxBackward0>)
+tensor([0, 0, 2, 0, 0, 0, 0, 0], device='cuda:0')
+tensor([0, 0, 2, 0, 0, 0, 0, 0], device='cuda:0')
+tensor([0, 0, 0, 0, 0, 0, 0, 0], device='cuda:0')
+7
+tensor([[0.9382, 0.0194, 0.0424],
+        [0.9465, 0.0172, 0.0363],
+        [0.9455, 0.0171, 0.0374],
+        [0.9300, 0.0204, 0.0497],
+        [0.9358, 0.0207, 0.0435],
+        [0.9453, 0.0170, 0.0377],
+        [0.9517, 0.0146, 0.0337],
+        [0.9325, 0.0218, 0.0457]], device='cuda:0', grad_fn=<SoftmaxBackward0>)
+tensor([0, 0, 0, 2, 0, 0, 0, 1], device='cuda:0')
+tensor([0, 0, 0, 2, 0, 0, 0, 1], device='cuda:0')
+tensor([0, 0, 0, 0, 0, 0, 0, 0], device='cuda:0')
+6
+tensor([[0.9768, 0.0097, 0.0135],
+        [0.9766, 0.0096, 0.0138],
+        [0.9764, 0.0093, 0.0143],
+        [0.9739, 0.0109, 0.0152],
+        [0.9841, 0.0069, 0.0090],
+        [0.9752, 0.0088, 0.0159],
+        [0.9759, 0.0091, 0.0151],
+        [0.9820, 0.0082, 0.0098]], device='cuda:0', grad_fn=<SoftmaxBackward0>)
+tensor([0, 2, 2, 0, 0, 0, 0, 0], device='cuda:0')
+tensor([0, 2, 2, 0, 0, 0, 0, 0], device='cuda:0')
+tensor([0, 0, 0, 0, 0, 0, 0, 0], device='cuda:0')
+6
+tensor([[0.9926, 0.0036, 0.0038],
+        [0.9894, 0.0054, 0.0052],
+        [0.9926, 0.0037, 0.0037],
+        [0.9918, 0.0040, 0.0042],
+        [0.9892, 0.0041, 0.0067],
+        [0.9905, 0.0050, 0.0045],
+        [0.9939, 0.0031, 0.0029],
+        [0.9897, 0.0046, 0.0056]], device='cuda:0', grad_fn=<SoftmaxBackward0>)
+tensor([0, 1, 0, 0, 2, 1, 0, 1], device='cuda:0')
+tensor([0, 1, 0, 0, 2, 1, 0, 1], device='cuda:0')
+tensor([0, 0, 0, 0, 0, 0, 0, 0], device='cuda:0')
+4
+tensor([[0.9972, 0.0016, 0.0012],
+        [0.9952, 0.0024, 0.0023],
+        [0.9949, 0.0026, 0.0025],
+        [0.9962, 0.0021, 0.0017],
+        [0.9970, 0.0017, 0.0012],
+        [0.9961, 0.0022, 0.0017],
+        [0.9951, 0.0026, 0.0023],
+        [0.9952, 0.0028, 0.0020]], device='cuda:0', grad_fn=<SoftmaxBackward0>)
+tensor([0, 2, 2, 0, 1, 1, 0, 1], device='cuda:0')
+tensor([0, 2, 2, 0, 1, 1, 0, 1], device='cuda:0')
+tensor([0, 0, 0, 0, 0, 0, 0, 0], device='cuda:0')
+3
+tensor([[9.9824e-01, 1.1153e-03, 6.4343e-04],
+        [9.9702e-01, 1.6484e-03, 1.3296e-03],
+        [9.9827e-01, 1.0939e-03, 6.3372e-04],
+        [9.9820e-01, 1.1322e-03, 6.6582e-04],
+        [9.9798e-01, 1.2884e-03, 7.3011e-04],
+        [9.9843e-01, 9.7428e-04, 5.9214e-04],
+        [9.9761e-01, 1.6075e-03, 7.7924e-04],
+        [9.9664e-01, 1.9655e-03, 1.3918e-03]], device='cuda:0',
+       grad_fn=<SoftmaxBackward0>)
+tensor([0, 2, 0, 0, 0, 0, 1, 0], device='cuda:0')
+tensor([0, 2, 0, 0, 0, 0, 1, 0], device='cuda:0')
+tensor([0, 0, 0, 0, 0, 0, 0, 0], device='cuda:0')
+6
+Train Epoch: 0 [8 (26%)]	Loss: 0.801807Accuracy: 0.750000
+tensor([[9.9855e-01, 9.5780e-04, 4.8952e-04],
+        [9.9868e-01, 9.3924e-04, 3.8335e-04],
+        [9.9923e-01, 5.1269e-04, 2.5616e-04],
+        [9.9851e-01, 9.2925e-04, 5.6229e-04],
+        [9.9912e-01, 6.2202e-04, 2.6077e-04],
+        [9.9865e-01, 9.1181e-04, 4.3953e-04],
+        [9.9853e-01, 9.4488e-04, 5.2972e-04],
+        [9.9880e-01, 8.1259e-04, 3.8972e-04]], device='cuda:0',
+       grad_fn=<SoftmaxBackward0>)
+tensor([1, 0, 0, 0, 0, 0, 0, 0], device='cuda:0')
+tensor([1, 0, 0, 0, 0, 0, 0, 0], device='cuda:0')
+tensor([0, 0, 0, 0, 0, 0, 0, 0], device='cuda:0')
+7
+tensor([[9.9935e-01, 4.8672e-04, 1.6249e-04],
+        [9.9939e-01, 4.6667e-04, 1.4592e-04],
+        [9.9942e-01, 4.1204e-04, 1.7233e-04],
+        [9.9918e-01, 6.1945e-04, 2.0382e-04],
+        [9.9929e-01, 5.1356e-04, 1.9930e-04],
+        [9.9925e-01, 5.3716e-04, 2.1108e-04],
+        [9.9890e-01, 7.2357e-04, 3.7188e-04],
+        [9.9925e-01, 4.6831e-04, 2.8090e-04]], device='cuda:0',
+       grad_fn=<SoftmaxBackward0>)
+tensor([0, 1, 0, 0, 0, 0, 2, 2], device='cuda:0')
+tensor([0, 1, 0, 0, 0, 0, 2, 2], device='cuda:0')
+tensor([0, 0, 0, 0, 0, 0, 0, 0], device='cuda:0')
+5
+tensor([[9.9980e-01, 1.6178e-04, 3.5580e-05],
+        [9.9971e-01, 2.2299e-04, 6.5536e-05],
+        [9.9962e-01, 3.2131e-04, 6.3658e-05],
+        [9.9977e-01, 1.8306e-04, 5.0020e-05],
+        [9.9955e-01, 2.9879e-04, 1.5353e-04],
+        [9.9951e-01, 3.3671e-04, 1.4930e-04],
+        [9.9976e-01, 1.9630e-04, 4.7132e-05],
+        [9.9963e-01, 2.9526e-04, 7.1890e-05]], device='cuda:0',
+       grad_fn=<SoftmaxBackward0>)
+tensor([0, 0, 1, 0, 2, 2, 0, 1], device='cuda:0')
+tensor([0, 0, 1, 0, 2, 2, 0, 1], device='cuda:0')
+tensor([0, 0, 0, 0, 0, 0, 0, 0], device='cuda:0')
+4
+tensor([[9.9979e-01, 1.7684e-04, 3.3741e-05],
+        [9.9972e-01, 2.1328e-04, 6.9446e-05],
+        [9.9978e-01, 1.7232e-04, 4.3556e-05],
+        [9.9978e-01, 1.8398e-04, 4.0097e-05],
+        [9.9981e-01, 1.5755e-04, 3.1086e-05],
+        [9.9965e-01, 2.5510e-04, 9.7026e-05],
+        [9.9984e-01, 1.3229e-04, 3.2348e-05],
+        [9.9983e-01, 1.3602e-04, 3.4289e-05]], device='cuda:0',
+       grad_fn=<SoftmaxBackward0>)
+tensor([1, 2, 0, 0, 0, 2, 0, 0], device='cuda:0')
+tensor([1, 2, 0, 0, 0, 2, 0, 0], device='cuda:0')
+tensor([0, 0, 0, 0, 0, 0, 0, 0], device='cuda:0')
+5
+tensor([[9.9981e-01, 1.6535e-04, 2.9349e-05],
+        [9.9989e-01, 8.8491e-05, 1.7895e-05],
+        [9.9982e-01, 1.4897e-04, 3.5478e-05],
+        [9.9981e-01, 1.4691e-04, 4.4800e-05],
+        [9.9984e-01, 1.2825e-04, 3.0581e-05],
+        [9.9984e-01, 1.2663e-04, 3.0877e-05],
+        [9.9988e-01, 1.0366e-04, 1.7317e-05],
+        [9.9983e-01, 1.3753e-04, 3.1710e-05]], device='cuda:0',
+       grad_fn=<SoftmaxBackward0>)
+tensor([1, 0, 0, 2, 0, 2, 0, 0], device='cuda:0')
+tensor([1, 0, 0, 2, 0, 2, 0, 0], device='cuda:0')
+tensor([0, 0, 0, 0, 0, 0, 0, 0], device='cuda:0')
+5
+tensor([[9.9986e-01, 1.1010e-04, 2.6470e-05],
+        [9.9989e-01, 9.0026e-05, 1.5755e-05],
+        [9.9989e-01, 8.7927e-05, 2.2132e-05],
+        [9.9989e-01, 9.7435e-05, 1.6836e-05],
+        [9.9990e-01, 8.2257e-05, 1.4993e-05],
+        [9.9989e-01, 9.3731e-05, 2.0955e-05],
+        [9.9989e-01, 9.2200e-05, 1.9682e-05],
+        [9.9988e-01, 9.7686e-05, 1.8739e-05]], device='cuda:0',
+       grad_fn=<SoftmaxBackward0>)
+tensor([0, 0, 0, 0, 0, 0, 0, 0], device='cuda:0')
+tensor([0, 0, 0, 0, 0, 0, 0, 0], device='cuda:0')
+tensor([0, 0, 0, 0, 0, 0, 0, 0], device='cuda:0')
+8
+tensor([[9.9989e-01, 9.0938e-05, 2.2688e-05],
+        [9.9988e-01, 9.4676e-05, 2.2968e-05],
+        [9.9988e-01, 9.6388e-05, 1.8553e-05],
+        [9.9995e-01, 4.6411e-05, 6.7876e-06],
+        [9.9992e-01, 6.7302e-05, 1.5370e-05],
+        [9.9994e-01, 5.2607e-05, 6.7978e-06],
+        [9.9992e-01, 6.3607e-05, 1.4930e-05],
+        [9.9990e-01, 8.6145e-05, 1.3421e-05]], device='cuda:0',
+       grad_fn=<SoftmaxBackward0>)
+tensor([2, 2, 0, 0, 2, 0, 2, 0], device='cuda:0')
+tensor([2, 2, 0, 0, 2, 0, 2, 0], device='cuda:0')
+tensor([0, 0, 0, 0, 0, 0, 0, 0], device='cuda:0')
+4
+Train Epoch: 0 [16 (52%)]	Loss: 1.051443Accuracy: 0.500000
+tensor([[9.9992e-01, 7.2367e-05, 1.2555e-05],
+        [9.9993e-01, 5.9321e-05, 1.3400e-05],
+        [9.9995e-01, 4.2689e-05, 6.5211e-06],
+        [9.9993e-01, 5.8873e-05, 1.3556e-05],
+        [9.9992e-01, 6.2639e-05, 1.3448e-05],
+        [9.9996e-01, 3.2832e-05, 5.3508e-06],
+        [9.9992e-01, 7.1909e-05, 1.0840e-05],
+        [9.9992e-01, 7.1534e-05, 1.2279e-05]], device='cuda:0',
+       grad_fn=<SoftmaxBackward0>)
+tensor([0, 2, 0, 0, 0, 0, 0, 0], device='cuda:0')
+tensor([0, 2, 0, 0, 0, 0, 0, 0], device='cuda:0')
+tensor([0, 0, 0, 0, 0, 0, 0, 0], device='cuda:0')
+7
+tensor([[9.9993e-01, 5.4701e-05, 1.6911e-05],
+        [9.9997e-01, 2.3652e-05, 3.7460e-06],
+        [9.9996e-01, 3.1168e-05, 4.3014e-06],
+        [9.9993e-01, 6.4928e-05, 9.1135e-06],
+        [9.9994e-01, 5.1760e-05, 1.2932e-05],
+        [9.9994e-01, 5.1836e-05, 9.7678e-06],
+        [9.9994e-01, 5.4940e-05, 8.0073e-06],
+        [9.9994e-01, 5.3721e-05, 7.4781e-06]], device='cuda:0',
+       grad_fn=<SoftmaxBackward0>)
+tensor([2, 0, 0, 1, 2, 0, 1, 1], device='cuda:0')
+tensor([2, 0, 0, 1, 2, 0, 1, 1], device='cuda:0')
+tensor([0, 0, 0, 0, 0, 0, 0, 0], device='cuda:0')
+3
+tensor([[9.9996e-01, 3.2457e-05, 5.5472e-06],
+        [9.9995e-01, 4.4787e-05, 5.6071e-06],
+        [9.9996e-01, 3.5196e-05, 6.4353e-06],
+        [9.9995e-01, 4.6741e-05, 7.6460e-06],
+        [9.9997e-01, 2.9585e-05, 4.8552e-06],
+        [9.9995e-01, 4.2128e-05, 6.8973e-06],
+        [9.9996e-01, 3.5093e-05, 6.3616e-06],
+        [9.9996e-01, 3.1710e-05, 5.5569e-06]], device='cuda:0',
+       grad_fn=<SoftmaxBackward0>)
+tensor([0, 1, 0, 0, 0, 1, 0, 0], device='cuda:0')
+tensor([0, 1, 0, 0, 0, 1, 0, 0], device='cuda:0')
+tensor([0, 0, 0, 0, 0, 0, 0, 0], device='cuda:0')
+6
+Traceback (most recent call last):
+  File "/content/drive/.shortcut-targets-by-id/12qdxIhrJkYThSDH6ulLJ4IaUDG4pGrFG/RA_Daragh_CV_Arduino/cv-component/q1_q2_classification/train_q2.py", line 144, in <module>
+    test_ap, test_map = trainer.train(args, model, optimizer, scheduler)
+  File "/content/drive/.shortcut-targets-by-id/12qdxIhrJkYThSDH6ulLJ4IaUDG4pGrFG/RA_Daragh_CV_Arduino/cv-component/q1_q2_classification/trainer.py", line 69, in train
+    output = model(data)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/content/drive/.shortcut-targets-by-id/12qdxIhrJkYThSDH6ulLJ4IaUDG4pGrFG/RA_Daragh_CV_Arduino/cv-component/q1_q2_classification/train_q2.py", line 102, in forward
+    features_masked_2 = self.resnet(x_with_edge_2)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/container.py", line 217, in forward
+    input = module(input)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/container.py", line 217, in forward
+    input = module(input)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torchvision/models/resnet.py", line 93, in forward
+    out = self.bn1(out)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/torch/nn/modules/module.py", line 1514, in _call_impl
+    forward_call = (self._slow_forward if torch._C._get_tracing_state() else self.forward)

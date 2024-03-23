@@ -1,0 +1,92 @@
+wandb_version: 1
+
+device:
+  desc: null
+  value: cuda
+batch_size:
+  desc: null
+  value: 8
+test_batch_size:
+  desc: null
+  value: 1000
+epochs:
+  desc: null
+  value: 75
+lr:
+  desc: null
+  value: 5.0e-05
+gamma:
+  desc: null
+  value: 0.1
+step_size:
+  desc: null
+  value: 30
+log_every:
+  desc: null
+  value: 100
+val_every:
+  desc: null
+  value: 5
+save_at_end:
+  desc: null
+  value: true
+save_freq:
+  desc: null
+  value: 5
+use_cuda:
+  desc: null
+  value: true
+inp_size:
+  desc: null
+  value: 224
+canny_low:
+  desc: null
+  value: 10
+canny_high:
+  desc: null
+  value: 20
+data_dir:
+  desc: null
+  value: ../data/new_set_up_frames/
+run_name:
+  desc: null
+  value: run-new_and_clean_data_canny-2_canny_masks
+_wandb:
+  desc: null
+  value:
+    python_version: 3.10.12
+    cli_version: 0.16.4
+    framework: huggingface
+    huggingface_version: 4.38.2
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1711211273.0
+    t:
+      1:
+      - 1
+      - 5
+      - 11
+      - 12
+      - 41
+      - 49
+      - 53
+      - 55
+      2:
+      - 1
+      - 5
+      - 11
+      - 12
+      - 41
+      - 49
+      - 53
+      - 55
+      3:
+      - 13
+      - 16
+      - 23
+      4: 3.10.12
+      5: 0.16.4
+      6: 4.38.2
+      8:
+      - 5
+      13: linux-x86_64

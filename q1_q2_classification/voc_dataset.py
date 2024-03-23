@@ -6,13 +6,12 @@ from torch.utils.data import Dataset
 from torchvision import transforms
 
 class VOCDataset(Dataset):
-    classes = ['0_black_3_legs', '5_NPN_Bipolar_Transistors', '6_Black_Rec']
-    # classes = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11']
+    # classes = ['0_black_3_legs', '5_NPN_Bipolar_Transistors', '6_Black_Rec']
+    classes = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11']
     def __init__(self, split, size, data_dir):
         self.data_dir = data_dir
         self.size = size
         self.split = split
-        # self.classes = ['0_black_3_legs','1_Active_buzzers', '2_Breadboard_trim_potentiometer', '3_resistor', '4_development_board', '5_NPN_Bipolar_Transistors', '6_Black_Rec', '7_piezo_transducer']
         self.classes = VOCDataset.classes
         self.class_to_idx = {cls: idx for idx, cls in enumerate(self.classes)}
         self.images = self._load_images()
