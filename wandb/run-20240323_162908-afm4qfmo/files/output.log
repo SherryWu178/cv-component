@@ -1,5 +1,0 @@
-Traceback (most recent call last):
-  File "/content/drive/.shortcut-targets-by-id/12qdxIhrJkYThSDH6ulLJ4IaUDG4pGrFG/RA_Daragh_CV_Arduino/cv-component/q1_q2_classification/train_q2.py", line 140, in <module>
-    test_ap, test_map = trainer.train(args, model, optimizer, scheduler)
-  File "/content/drive/.shortcut-targets-by-id/12qdxIhrJkYThSDH6ulLJ4IaUDG4pGrFG/RA_Daragh_CV_Arduino/cv-component/q1_q2_classification/trainer.py", line 55, in train
-    args, 'voc', train=False, batch_size=len(test_dataset), split='test', inp_size=args.inp_size)

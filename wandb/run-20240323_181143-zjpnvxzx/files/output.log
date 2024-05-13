@@ -1,9 +1,0 @@
-tensor([   inf, 1.0000, 0.5000,    inf,    inf, 0.5000,    inf,    inf],
-       device='cuda:0')
-Traceback (most recent call last):
-  File "/content/drive/.shortcut-targets-by-id/12qdxIhrJkYThSDH6ulLJ4IaUDG4pGrFG/RA_Daragh_CV_Arduino/cv-component/q1_q2_classification/train_q2.py", line 144, in <module>
-    test_ap, test_map = trainer.train(args, model, optimizer, scheduler)
-  File "/content/drive/.shortcut-targets-by-id/12qdxIhrJkYThSDH6ulLJ4IaUDG4pGrFG/RA_Daragh_CV_Arduino/cv-component/q1_q2_classification/trainer.py", line 96, in train
-    print('Train Epoch: {} [{} ({:.0f}%)]\tLoss: {:.6f}Accuracy: {:.6f}'.format(epoch, cnt, 100. * batch_idx / len(train_loader), loss.item(), accuracy))
-  File "/usr/local/lib/python3.10/dist-packages/torch/_tensor.py", line 966, in __format__
-    return object.__format__(self, format_spec)
