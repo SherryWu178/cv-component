@@ -7,6 +7,7 @@ import numpy as np
 import utils
 from voc_dataset import VOCDataset
 import wandb
+import os
 
 def save_this_epoch(args, epoch):
     if args.save_freq > 0 and (epoch+1) % args.save_freq == 0:
@@ -16,10 +17,12 @@ def save_this_epoch(args, epoch):
     return False
 
 
-def save_model(epoch, model_name, model):
-    filename = 'checkpoint-{}-epoch{}.pth'.format(
-        model_name, epoch+1)
-    print("saving model at ", filename)
+def save_model(epoch, save_folder, model):
+    os.makedirs(os.path.join("checkpoints", save_folder), exist_ok=True)
+    filename = os.path.join("checkpoints", save_folder, f"checkpoint-{epoch+1}.pth")
+    print("Saving model at:", filename)
+    
+    # Save the model state dictionary
     torch.save(model.state_dict(), filename)
 
 def custom_multi_label_loss(output, target, wgt):
@@ -47,12 +50,15 @@ def custom_multi_label_loss(output, target, wgt):
     loss = torch.mean(loss)
     return loss
 
-def train(args, model, optimizer, scheduler=None, model_name='model'):
+def train(args, model, optimizer, scheduler=None, model_name='model', num_classes=10):
+    print("trainer num_classes", num_classes)
     wandb.init(project="kit cv", name=args.run_name, config=vars(args))
     train_loader = utils.get_data_loader(
-        args, 'voc', train=True, batch_size=args.batch_size, split='trainval', inp_size=args.inp_size)
-    # test_loader = utils.get_data_loader(
-    #     'voc', train=False, batch_size=args.test_batch_size, split='test', inp_size=args.inp_size)
+        args, 'voc', train=True, batch_size=args.batch_size, split='train', inp_size=args.inp_size)
+
+    val_loader = utils.get_data_loader(
+        args, 'voc', train=False, batch_size=args.test_batch_size, split='val', inp_size=args.inp_size)
+    
     test_loader = utils.get_data_loader(
         args, 'voc', train=False, batch_size=args.test_batch_size, split='test', inp_size=args.inp_size)
 
@@ -61,7 +67,6 @@ def train(args, model, optimizer, scheduler=None, model_name='model'):
     model = model.to(args.device)
 
     cnt = 0
-
     for epoch in range(args.epochs):
         for batch_idx, (data, target, wgt) in enumerate(train_loader):
             data, target, wgt = data.to(args.device), target.to(args.device), wgt.to(args.device)
@@ -69,22 +74,9 @@ def train(args, model, optimizer, scheduler=None, model_name='model'):
             optimizer.zero_grad()
             output = model(data)
 
-            ##################################################################
-            # TODO: Implement a suitable loss function for multi-label
-            # classification. You are NOT allowed to use any pytorch built-in
-            # functions. Remember to take care of underflows / overflows.
-            # Function Inputs:
-            #   - `output`: Outputs from the network
-            #   - `target`: Ground truth labels, refer to voc_dataset.py
-            #   - `wgt`: Weights (difficult or not), refer to voc_dataset.py
-            # Function Outputs:
-            #   - `output`: Computed loss, a single floating point number
-            ##################################################################
             # Example of target with class indices
             criterion = nn.CrossEntropyLoss()
 
-            # print("predicted", output)
-            # print("target", target)
             predictions = torch.argmax(output, 1) 
             target_label = torch.argmax(target, 1)
             
@@ -94,9 +86,6 @@ def train(args, model, optimizer, scheduler=None, model_name='model'):
 
             lr = optimizer.param_groups[0]['lr']  # Assuming there's only one parameter group
             wandb.log({"Loss/train": loss, "learning_rate": lr, "cnt": cnt, "arruracy": accuracy})
-            ##################################################################
-            #                          END OF YOUR CODE                      #
-            ##################################################################
             
             loss.backward()
             
@@ -112,7 +101,7 @@ def train(args, model, optimizer, scheduler=None, model_name='model'):
             all_predictions = []
             all_targets = []
             model.eval()
-            ap, map = utils.eval_dataset_map(model, args.device, test_loader)
+            ap, map = utils.eval_dataset_map(model, args.device, val_loader, epoch, num_classes)
             print("map: ", map)
             wandb.log({"map": map, "ap": ap, "epoch": epoch, "cnt": cnt})
             model.train()
@@ -122,10 +111,11 @@ def train(args, model, optimizer, scheduler=None, model_name='model'):
 
         # save model
         if save_this_epoch(args, epoch):
-            save_model(epoch, model_name, model)
+            # model_name = "latest-model"
+            save_folder = args.run_name
+            save_model(epoch, save_folder, model)
 
-    # Validation iteration
-    test_loader = utils.get_data_loader('voc', train=False, batch_size=args.test_batch_size, split='test', inp_size=args.inp_size)
-    ap, map = utils.eval_dataset_map(model, args.device, test_loader)
+    # Final Validation
+    ap, map = utils.eval_dataset_map(model, args.device, test_loader, epoch, num_classes)
     wandb.finish()
     return ap, map

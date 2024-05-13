@@ -6,6 +6,7 @@ from torch.utils.data import DataLoader
 import torch.nn.functional as F
 import argparse
 import wandb
+import random
 from voc_dataset import VOCDataset
 
 def parse_arguments():
@@ -51,7 +52,7 @@ def parse_arguments():
     print(args)
     return args
 
-def get_data_loader(args, name='voc', train=True, batch_size=64, split='train', inp_size=224):
+def get_data_loader(args, name='voc', train=True, batch_size=64, split="", inp_size=224):
     if name == 'voc':
         from voc_dataset import VOCDataset
         dataset = VOCDataset(split, inp_size, data_dir=args.data_dir)
@@ -61,8 +62,8 @@ def get_data_loader(args, name='voc', train=True, batch_size=64, split='train', 
     loader = DataLoader(
         dataset,
         batch_size=batch_size,
-        shuffle=train,
-        num_workers=2,
+        shuffle=True,
+        num_workers=4,
     )
     return loader
 
@@ -83,6 +84,7 @@ def compute_ap(gt, pred, valid, average=None):
         AP (list): average precision for all classes
     """
     nclasses = gt.shape[1]
+    print(nclasses)
     AP = []
     true_labels = []
     pred_labels = []
@@ -98,7 +100,7 @@ def compute_ap(gt, pred, valid, average=None):
     return AP
 
 
-def eval_dataset_map(model, device, test_loader):
+def eval_dataset_map(model, device, test_loader, epoch, num_classes):
     # ! Do not modify the code in this function
 
     """
@@ -110,14 +112,16 @@ def eval_dataset_map(model, device, test_loader):
          AP (list): Average Precision for all classes
          MAP (float): mean average precision
     """
+
+    true_labels = []
+    pred_labels = []
+    wrongly_predicted_samples = []
     
     with torch.no_grad():
-        AP_list = []
-        true_labels = []
-        pred_labels = []
+        AP_list = [0] * num_classes
+  
         
         for data, target, wgt in test_loader:
-            print("iter")
             data = data.to(device)
             output = model(data)
             
@@ -127,25 +131,51 @@ def eval_dataset_map(model, device, test_loader):
 
             gt_label = np.argmax(gt, axis=1)
             pred_label = np.argmax(pred, axis=1)
-
-            # print("gt_label", gt_label)
-            # print("pred_label", pred_label)
             
             true_labels.extend(gt_label)
             pred_labels.extend(pred_label)
             
             AP = compute_ap(gt, pred, valid)
-            AP_list.extend(AP)
-        
+
+            print(len(AP))
+            print(len(AP_list))
+
+            for i in range(len(AP)):
+                AP_list[i] += AP[i]
+            
+            for i in range(len(pred_label)):
+                if pred_label[i] != gt_label[i]:
+                    wrongly_predicted_samples.append((data[i].permute((1, 2, 0)), gt_label[i], pred_label[i]))
+
+
+    AP_list = [ ap / len(test_loader) for ap in AP_list]
     confusion_matrix_result = sklearn.metrics.confusion_matrix(true_labels, pred_labels)
     print("confusion_matrix_result", confusion_matrix_result)
-    wandb.log({"my_conf_mat_id" : wandb.plot.confusion_matrix( 
-            preds=pred_labels, y_true=true_labels,
-            class_names=VOCDataset.classes)})
-
+    print(true_labels)
+    print(pred_labels)
+    print(torch.sum(torch.eq(torch.tensor(true_labels), torch.tensor(pred_labels))).item())
+    accuracy = torch.sum(torch.eq(torch.tensor(true_labels), torch.tensor(pred_labels))).item() / len(pred_labels)
     AP = np.array(AP_list)
-    print("AP", AP)
+    print("AP", AP, "test accuracy", accuracy)
     mAP = np.mean(AP)
+
+    wandb.log({"my_conf_mat_id" : wandb.plot.confusion_matrix( 
+        preds=pred_labels, y_true=true_labels,
+        class_names=VOCDataset.classes)})
+
+    wandb.log({ "mAP": mAP, "epoch": epoch, "test arruracy": accuracy})
+    
+    if wrongly_predicted_samples:
+        # Randomly sample 10 examples
+        sampled_samples = random.sample(wrongly_predicted_samples, min(10, len(wrongly_predicted_samples)))
+        wrongly_predicted_images = []
+
+        for data, true_label, pred_label in sampled_samples:
+            wrongly_predicted_images.append(wandb.Image(data.cpu().numpy(), caption=f"True Label: {true_label}, Predicted Label: {pred_label}"))
+
+        wandb.log({"Wrongly_Predicted_Images": wrongly_predicted_images})
+    else:
+        print("No wrongly predicted samples to log.")
 
     return AP, mAP
 

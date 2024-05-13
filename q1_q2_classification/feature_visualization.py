@@ -22,8 +22,6 @@ def load_model(filename):
     return torch.load(filename)
 
 def extract_features(model, device, test_loader):
-
-
     with torch.no_grad():
         test_features = []
         gt_classes = []
@@ -59,7 +57,6 @@ def draw_plot(test_features, gt_classes):
     # Perform t-SNE on the features
     tsne = TSNE(n_components=2, random_state=0)
     tsne_results = tsne.fit_transform(test_features)
-
  
     # extract x and y coordinates representing the positions of the images on T-SNE plot
     tx = tsne_results[:, 0]

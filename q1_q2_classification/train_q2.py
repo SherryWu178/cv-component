@@ -10,51 +10,6 @@ import random
 import cv2
 import argparse
 
-# class ResNet(nn.Module):
-#     def __init__(self, num_classes, args) -> None:
-#         super().__init__()
-
-#         self.resnet = torchvision.models.resnet18(pretrained=True)
-#         ##################################################################
-#         # TODO: Define a FC layer here to process the features
-#         ##################################################################
-#         self.resnet = nn.Sequential(*list(self.resnet.children())[:-1])
-
-#         for param in self.resnet.parameters():
-#             param.requires_grad = False
-
-        
-#         # Define your own classification layer for the specific task
-#         self.fc = nn.Linear(512, num_classes) 
-#         self.fc.requires_grad = True
-
-#         self.softmax = nn.Softmax(dim=1)
-
-#         ##################################################################
-#         #                          END OF YOUR CODE                      #
-#         ##################################################################
-        
-
-#     def forward(self, x):
-#         ##################################################################
-#         # TODO: Return unnormalized log-probabilities here
-#         ##################################################################
-#         # Flatten the output (if needed) before passing it to the classification layer
-#         x = self.resnet(x)
-#         x = x.view(x.size(0), -1)
-
-#         # Pass the features through your classification layer
-#         out = self.fc(x)
-#         return self.softmax(out)
-#         ##################################################################
-#         #                          END OF YOUR CODE                      #
-#         ##################################################################
-
-
-import torch
-import torch.nn as nn
-import torchvision
-
 class ResNet(nn.Module):
     def __init__(self, num_classes):
         super().__init__()
@@ -83,7 +38,10 @@ class ResNet(nn.Module):
         out = self.fc(x)
         return out
 
-
+'''
+   A special Resnet thats create canny edges of a input image and use it for classfication.
+   Currently NOT used.
+'''
 class ResNetWithEdge(nn.Module):
     def __init__(self, num_classes, args):
         super(ResNetWithEdge, self).__init__()
@@ -143,7 +101,6 @@ class ResNetWithEdge(nn.Module):
         features_combined = self.relu(features_combined)
 
         # Classification
-        # out = self.softmax(self.fc2(features_combined))
         out = self.softmax(self.fc2(features_combined))
         return out
 
@@ -155,24 +112,16 @@ if __name__ == "__main__":
     # parse the paramaters
     args = parse_arguments()
 
-    ##################################################################
-    # TODO: Define a ResNet-18 model (https://arxiv.org/pdf/1512.03385.pdf) 
-    # Initialize this model with ImageNet pre-trained weights
-    # (except the last layer). You are free to use torchvision.models 
-    ##################################################################
-
     # model = ResNet(len(VOCDataset.classes)).to(args.device)
     num_classes = count_classes(args.data_dir)
+    print(num_classes)
     model = ResNet(num_classes).to(args.device)
-
-    ##################################################################
-    #                          END OF YOUR CODE                      #
-    ##################################################################
 
     # initializes Adam optimizer and simple StepLR scheduler
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=args.step_size, gamma=args.gamma)
 
     # trains model using your training code and reports test map
-    test_ap, test_map = trainer.train(args, model, optimizer, scheduler)
+    print("num_classes", num_classes)
+    test_ap, test_map = trainer.train(args, model, optimizer, scheduler, num_classes=num_classes)
     print('test map:', test_map)
